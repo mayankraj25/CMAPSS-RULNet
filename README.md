@@ -1,0 +1,59 @@
+# 📌 Project Overview
+
+This project focuses on **Remaining Useful Life (RUL) prediction** for aircraft engines using the **NASA CMAPSS FD001 dataset**.  
+The objective is to build a **reliable time-series model** that learns engine degradation patterns from **multivariate sensor data** and accurately estimates the remaining life of **previously unseen engines**.
+
+This README documents **Version 1** of the modeling pipeline, covering:
+
+- A strong **LSTM baseline**
+- **Ensemble learning (bagging)** experiments
+- A **hybrid CNN–LSTM architecture** that improves performance
+
+Future versions will build on this foundation with further architectural and training refinements.
+
+---
+
+## 📂 Dataset
+
+- **Dataset:** NASA CMAPSS (FD001)  
+- **Source:**  
+  https://data.nasa.gov/Aerospace/CMAPSS-Jet-Engine-Simulated-Data/ff5v-kuh6/
+
+### Key Characteristics
+
+- Multivariate **time-series sensor data**
+- Single operating condition (**FD001**)
+- **Run-to-failure** engine trajectories
+- Widely used **benchmark dataset** for RUL prediction research
+
+---
+
+## 🧠 Problem Formulation
+
+- **Input:** Multivariate sensor sequences of shape `(50, 24)`
+- **Output:** Remaining Useful Life (RUL)
+- **Task Type:** Supervised time-series regression
+- **Evaluation Metrics:** RMSE, MAE
+
+---
+
+## Version 1 — LSTM Baseline (FD001)
+
+**Goal:**  
+Establish a simple LSTM baseline for CMAPSS FD001 to verify that degradation trends can be learned from raw sensor sequences.
+
+**Setup:**  
+- Dataset: NASA CMAPSS FD001  
+- Input: `(50, 24)` time-series sequences  
+- Model: 2-layer LSTM with dropout  
+- Loss: Mean Squared Error  
+- Metrics: RMSE, MAE  
+- Split: Engine-wise sequence generation (no leakage)
+
+**Results (Test Set):**  
+- RMSE: ~17.54  
+- MAE: ~12.84  
+
+**Notes:**  
+This version intentionally avoids architectural tricks (CNN, attention, ensembling) and serves as a reference baseline.  
+Performance is comparable to early CMAPSS baseline methods and highlights the bias limitations of plain LSTMs, motivating later architectural improvements.
