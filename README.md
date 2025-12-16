@@ -57,3 +57,33 @@ Establish a simple LSTM baseline for CMAPSS FD001 to verify that degradation tre
 **Notes:**  
 This version intentionally avoids architectural tricks (CNN, attention, ensembling) and serves as a reference baseline.  
 Performance is comparable to early CMAPSS baseline methods and highlights the bias limitations of plain LSTMs, motivating later architectural improvements.
+
+---
+
+## Version 2 — Improved LSTM Training (FD001)
+
+**Goal:**  
+Refine the baseline LSTM model by improving training stability and convergence, while keeping the architecture intentionally simple.
+
+**What Changed from Version 1:**  
+- Increased model capacity (100 → 50 LSTM units)  
+- Slightly deeper temporal representation  
+- Longer, more stable training dynamics observed  
+- Same data pipeline retained to ensure fair comparison
+
+**Setup:**  
+- Dataset: NASA CMAPSS FD001  
+- Input: `(50, 24)` time-series sequences  
+- Model: 2-layer LSTM with higher unit counts and dropout  
+- Loss: Mean Squared Error  
+- Metrics: RMSE, MAE  
+- Split: Same engine-wise sequence generation (no leakage)
+
+**Training Behavior:**  
+- Smoother convergence compared to Version 1  
+- Faster reduction in RMSE after mid-training epochs  
+- Indicates improved temporal learning capacity
+
+**Notes:**  
+This version focuses purely on **training and capacity improvements**, without introducing architectural changes such as CNNs or ensembling.  
+It serves as a stronger LSTM reference point and highlights that, while training refinements help, plain LSTMs still face bias limitations on CMAPSS FD001.
